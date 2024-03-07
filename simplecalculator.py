@@ -1,15 +1,20 @@
 from flask import Flask, render_template, request
+from waitress import serve
 
 app = Flask(__name__)
+
 
 def add(x, y):
     return x + y
 
+
 def subtract(x, y):
     return x - y
 
+
 def multiply(x, y):
     return x * y
+
 
 def divide(x, y):
     if y != 0:
@@ -17,9 +22,11 @@ def divide(x, y):
     else:
         return "Nevar dalīt ar nulli"
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/', methods=['POST'])
 def calculate():
@@ -43,5 +50,6 @@ def calculate():
 
     return render_template('index.html', result=result)
 
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    serve(app, host="0.0.0.0", port=8080)
